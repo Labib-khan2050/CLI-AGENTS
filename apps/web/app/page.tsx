@@ -710,29 +710,9 @@ export default function HomePage() {
 
   return (
     <div className="flex h-screen relative overflow-hidden bg-white dark:bg-black">
-      {/* Radial gradient background from bottom center */}
+      {/* Pure black background - no gradients */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-white dark:bg-black" />
-        <div 
-          className="absolute inset-0 dark:block hidden transition-all duration-1000 ease-in-out"
-          style={{
-            background: `radial-gradient(circle at 50% 100%, 
-              ${assistantBrandColors[selectedAssistant]}66 0%, 
-              ${assistantBrandColors[selectedAssistant]}4D 25%, 
-              ${assistantBrandColors[selectedAssistant]}33 50%, 
-              transparent 70%)`
-          }}
-        />
-        {/* Light mode gradient - subtle */}
-        <div 
-          className="absolute inset-0 block dark:hidden transition-all duration-1000 ease-in-out"
-          style={{
-            background: `radial-gradient(circle at 50% 100%, 
-              ${assistantBrandColors[selectedAssistant]}40 0%, 
-              ${assistantBrandColors[selectedAssistant]}26 25%, 
-              transparent 50%)`
-          }}
-        />
       </div>
       
       {/* Content wrapper */}
@@ -823,14 +803,14 @@ export default function HomePage() {
                         <input
                           name="name"
                           defaultValue={project.name}
-                          className="w-full px-2 py-1 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                          className="w-full px-2 py-1 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
                           autoFocus
                           onBlur={() => setEditingProject(null)}
                         />
                         <div className="flex gap-1">
                           <button
                             type="submit"
-                            className="px-2 py-1 text-xs bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+                            className="px-2 py-1 text-xs bg-black text-white rounded hover:bg-gray-800 transition-colors"
                           >
                             Save
                           </button>
@@ -906,7 +886,7 @@ export default function HomePage() {
                               e.stopPropagation();
                               setEditingProject(project);
                             }}
-                            className="p-1 text-gray-400 hover:text-orange-500 transition-colors"
+                            className="p-1 text-gray-400 hover:text-black dark:hover:text-white transition-colors"
                             title="Edit project name"
                           >
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -966,12 +946,9 @@ export default function HomePage() {
                     lineHeight: '72px'
                   }}
                 >
-                  Claudable
+                  
                 </h1>
               </div>
-              <p className="text-xl text-gray-700 dark:text-white/80 font-light tracking-tight">
-                Connect CLI Agent • Build what you want • Deploy instantly
-              </p>
             </div>
             
             {/* Image thumbnails */}
@@ -1006,9 +983,9 @@ export default function HomePage() {
               onDragLeave={handleDragLeave}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
-              className={`group flex flex-col gap-4 p-4 w-full rounded-[28px] border backdrop-blur-xl text-base shadow-xl transition-all duration-150 ease-in-out mb-6 relative overflow-visible ${
+              className={`group flex flex-col gap-2 p-2 mx-auto w-[36rem] max-w-full min-w-[24rem] rounded-3xl border backdrop-blur-xl text-base shadow-lg transition-all duration-150 ease-in-out mb-6 relative overflow-visible ${
                 isDragOver 
-                  ? 'border-[#DE7356] bg-[#DE7356]/10 dark:bg-[#DE7356]/20' 
+                  ? 'border-black dark:border-white bg-gray-100 dark:bg-gray-800' 
                   : 'border-gray-200 dark:border-white/10 bg-white dark:bg-black/20'
               }`}
             >
@@ -1016,10 +993,9 @@ export default function HomePage() {
                 <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Ask Claudable to create a blog about..."
+                  placeholder="Describe what you want to build..."
                   disabled={isCreatingProject}
-                  className="flex w-full rounded-md px-2 py-2 placeholder:text-gray-400 dark:placeholder:text-white/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 resize-none text-[16px] leading-snug md:text-base focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent focus:bg-transparent flex-1 text-gray-900 dark:text-white overflow-y-auto"
-                  style={{ height: '120px' }}
+                  className="flex w-full rounded-md px-2 py-2 placeholder:text-gray-400 dark:placeholder:text-white/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 resize-none text-[16px] leading-snug md:text-base focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent focus:bg-transparent flex-1 text-blue-700 dark:text-white overflow-y-auto min-h-16 max-h-32"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       if (e.metaKey || e.ctrlKey) {
@@ -1036,13 +1012,13 @@ export default function HomePage() {
               
               {/* Drag overlay */}
               {isDragOver && selectedAssistant !== 'cursor' && (
-                <div className="absolute inset-0 bg-[#DE7356]/10 dark:bg-[#DE7356]/20 rounded-[28px] flex items-center justify-center z-10 border-2 border-dashed border-[#DE7356]">
+                <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 rounded-3xl flex items-center justify-center z-10 border-2 border-dashed border-black dark:border-white">
                   <div className="text-center">
-                    <div className="text-3xl mb-3">📸</div>
-                    <div className="text-lg font-semibold text-[#DE7356] dark:text-[#DE7356] mb-2">
+                    <div className="text-3xl mb-2">📸</div>
+                    <div className="text-base font-semibold text-black dark:text-white mb-1">
                       Drop images here
                     </div>
-                    <div className="text-sm text-[#DE7356] dark:text-[#DE7356]">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
                       Supports: JPG, PNG, GIF, WEBP
                     </div>
                   </div>
@@ -1051,20 +1027,20 @@ export default function HomePage() {
               
               <div className="flex gap-1 flex-wrap items-center">
                 {/* Image Upload Button */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   {selectedAssistant === 'cursor' || selectedAssistant === 'qwen' ? (
                     <div 
-                      className="flex items-center justify-center w-8 h-8 text-gray-300 dark:text-gray-600 cursor-not-allowed opacity-50 rounded-full"
+                      className="flex items-center justify-center w-7 h-7 text-gray-300 dark:text-gray-600 cursor-not-allowed opacity-50 rounded-full"
                       title={selectedAssistant === 'qwen' ? "Qwen Coder doesn't support image input" : "Cursor CLI doesn't support image input"}
                     >
-                      <ImageIcon className="h-4 w-4" />
+                      <ImageIcon className="h-3.5 w-3.5" />
                     </div>
                   ) : (
                     <label 
-                      className="flex items-center justify-center w-8 h-8 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center justify-center w-7 h-7 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       title="Upload images"
                     >
-                      <ImageIcon className="h-4 w-4" />
+                      <ImageIcon className="h-3.5 w-3.5" />
                       <input
                         ref={fileInputRef}
                         type="file"
@@ -1085,16 +1061,16 @@ export default function HomePage() {
                       setShowAssistantDropdown(!showAssistantDropdown);
                       setShowModelDropdown(false);
                     }}
-                    className="justify-center whitespace-nowrap text-sm font-medium transition-colors duration-100 ease-in-out focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 border border-gray-200/50 dark:border-white/5 bg-transparent shadow-sm hover:bg-gray-50 dark:hover:bg-white/5 hover:border-gray-300/50 dark:hover:border-white/10 px-3 py-2 flex h-8 items-center gap-1 rounded-full text-gray-700 dark:text-white/80 hover:text-gray-900 dark:hover:text-white focus-visible:ring-0"
+                    className="justify-center whitespace-nowrap text-xs font-medium transition-colors duration-100 ease-in-out focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 border border-gray-200/50 dark:border-white/5 bg-transparent shadow-sm hover:bg-gray-50 dark:hover:bg-white/5 hover:border-gray-300/50 dark:hover:border-white/10 px-2.5 py-1.5 flex h-7 items-center gap-1 rounded-full text-gray-700 dark:text-white/80 hover:text-gray-900 dark:hover:text-white focus-visible:ring-0"
                   >
-                    <div className="w-4 h-4 rounded overflow-hidden">
+                    <div className="w-3.5 h-3.5 rounded overflow-hidden">
                       <img 
                         src={selectedAssistant === 'claude' ? '/claude.png' : selectedAssistant === 'cursor' ? '/cursor.png' : selectedAssistant === 'qwen' ? '/qwen.png' : selectedAssistant === 'gemini' ? '/gemini.png' : '/oai.png'} 
                         alt={selectedAssistant === 'claude' ? 'Claude' : selectedAssistant === 'cursor' ? 'Cursor' : selectedAssistant === 'qwen' ? 'Qwen' : selectedAssistant === 'gemini' ? 'Gemini' : 'Codex'}
                         className="w-full h-full object-contain"
                       />
                     </div>
-                    <span className="hidden md:flex text-sm font-medium">
+                    <span className="hidden md:flex text-xs font-medium">
                       {selectedAssistant === 'claude' ? 'Claude Code' : selectedAssistant === 'cursor' ? 'Cursor Agent' : selectedAssistant === 'qwen' ? 'Qwen Coder' : selectedAssistant === 'gemini' ? 'Gemini CLI' : 'Codex CLI'}
                     </span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 -960 960 960" className="shrink-0 h-3 w-3 rotate-90" fill="currentColor">
@@ -1207,15 +1183,15 @@ export default function HomePage() {
                   <button
                     type="submit"
                     disabled={(!prompt.trim() && uploadedImages.length === 0) || isCreatingProject}
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 transition-opacity duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-50 hover:scale-110"
+                    className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 transition-opacity duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-50 hover:scale-110"
                   >
                     {isCreatingProject ? (
-                      <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
                     ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" className="shrink-0" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 -960 960 960" className="shrink-0" fill="currentColor">
                         <path d="M442.39-616.87 309.78-487.26q-11.82 11.83-27.78 11.33t-27.78-12.33q-11.83-11.83-11.83-27.78 0-15.96 11.83-27.79l198.43-199q11.83-11.82 28.35-11.82t28.35 11.82l198.43 199q11.83 11.83 11.83 27.79 0 15.95-11.83 27.78-11.82 11.83-27.78 11.83t-27.78-11.83L521.61-618.87v348.83q0 16.95-11.33 28.28-11.32 11.33-28.28 11.33t-28.28-11.33q-11.33-11.33-11.33-28.28z"/>
                       </svg>
                     )}
@@ -1224,12 +1200,14 @@ export default function HomePage() {
               </div>
             </form>
             
-            {/* Example Cards */}
-            <div className="flex flex-wrap gap-2 justify-center mt-8">
+            {/* Example Cards - 3 Vertical Columns with 7 Cards Each */}
+            <div className="grid grid-cols-3 gap-4 mt-8 max-w-6xl mx-auto">
+              {/* Column 1 */}
+              <div className="flex flex-col gap-2">
               {[
                 { 
                   text: 'Landing Page',
-                  prompt: 'Design a modern, elegant, and visually stunning landing page for claudable with a clean, minimalistic aesthetic and a strong focus on user experience and conversion. Use a harmonious color palette, smooth gradients, soft shadows, and subtle animations to create a premium feel. Include a bold hero section with a clear headline and CTA, feature highlights with simple icons, social proof like testimonials or logos, and a final call-to-action at the bottom. Use large, impactful typography, balanced white space, and a responsive grid-based layout for a polished, pixel-perfect design optimized for both desktop and mobile.'
+                  prompt: 'Design a modern, elegant, and visually stunning landing page with a clean, minimalistic aesthetic and a strong focus on user experience and conversion. Use a harmonious color palette, smooth gradients, soft shadows, and subtle animations to create a premium feel. Include a bold hero section with a clear headline and CTA, feature highlights with simple icons, social proof like testimonials or logos, and a final call-to-action at the bottom. Use large, impactful typography, balanced white space, and a responsive grid-based layout for a polished, pixel-perfect design optimized for both desktop and mobile.'
                 },
                 { 
                   text: 'Gaming Platform',
@@ -1246,17 +1224,112 @@ export default function HomePage() {
                 { 
                   text: 'Room Visualizer',
                   prompt: 'Design a modern, immersive, and highly interactive room visualizer platform where users can preview furniture and decor in a 3D virtual environment. Use a clean, minimal design with elegant gradients, realistic visuals, and smooth transitions for a premium feel. Include a drag-and-drop furniture catalog, real-time 3D previews, color and style customization tools, and an intuitive save-and-share feature. Ensure the interface feels intuitive, responsive, and optimized for desktop and mobile experiences.'
+                },
+                {
+                  text: 'E-commerce Shop',
+                  prompt: 'Design a sleek, modern e-commerce platform with an elegant product catalog, smooth shopping experience, and secure checkout flow. Include product filters, search, cart, and wishlist features.'
+                },
+                {
+                  text: 'Portfolio Site',
+                  prompt: 'Create a stunning portfolio website showcasing creative work with smooth animations, project galleries, about section, and contact form. Modern, minimal, and professional.'
                 }
               ].map((example) => (
                 <button
                   key={example.text}
                   onClick={() => setPrompt(example.prompt)}
                   disabled={isCreatingProject}
-                  className="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-500 bg-transparent border border-[#DE7356]/10 dark:border-[#DE7356]/10 rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-[#DE7356]/15 dark:hover:border-[#DE7356]/15 hover:text-gray-700 dark:hover:text-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-500 bg-transparent border border-black/10 dark:border-white/10 rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-black/20 dark:hover:border-white/20 hover:text-gray-700 dark:hover:text-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                 >
                   {example.text}
                 </button>
               ))}
+              </div>
+              
+              {/* Column 2 */}
+              <div className="flex flex-col gap-2">
+              {[
+                {
+                  text: 'Dashboard Analytics',
+                  prompt: 'Build a comprehensive analytics dashboard with real-time data visualization, charts, metrics cards, and filterable reports. Clean, data-focused design with interactive elements.'
+                },
+                {
+                  text: 'Social Feed',
+                  prompt: 'Design an engaging social media feed with post cards, like/comment features, infinite scroll, and profile integration. Modern, intuitive, and mobile-friendly.'
+                },
+                {
+                  text: 'Task Manager',
+                  prompt: 'Create a powerful task management app with kanban boards, drag-and-drop, priority tags, due dates, and team collaboration features. Clean and productive interface.'
+                },
+                {
+                  text: 'Music Player',
+                  prompt: 'Design a beautiful music streaming player with album art, playlist management, playback controls, and search functionality. Elegant, immersive audio experience.'
+                },
+                {
+                  text: 'Recipe App',
+                  prompt: 'Build an appetizing recipe discovery app with ingredient lists, step-by-step instructions, cooking timers, and save/share features. Warm, inviting design.'
+                },
+                {
+                  text: 'Fitness Tracker',
+                  prompt: 'Create a motivating fitness tracking app with workout logs, progress charts, goal setting, and activity calendar. Energetic, health-focused design.'
+                },
+                {
+                  text: 'Weather App',
+                  prompt: 'Design a clean weather application with current conditions, hourly/daily forecasts, location search, and beautiful weather animations. Intuitive and informative.'
+                }
+              ].map((example) => (
+                <button
+                  key={example.text}
+                  onClick={() => setPrompt(example.prompt)}
+                  disabled={isCreatingProject}
+                  className="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-500 bg-transparent border border-black/10 dark:border-white/10 rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-black/20 dark:hover:border-white/20 hover:text-gray-700 dark:hover:text-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                >
+                  {example.text}
+                </button>
+              ))}
+              </div>
+              
+              {/* Column 3 */}
+              <div className="flex flex-col gap-2">
+              {[
+                {
+                  text: 'Booking System',
+                  prompt: 'Build a streamlined booking platform for appointments, reservations, or tickets with calendar integration, time slots, and confirmation flow. Professional and reliable.'
+                },
+                {
+                  text: 'Chat Interface',
+                  prompt: 'Create a modern messaging interface with real-time chat, message threads, emoji support, file sharing, and notifications. Clean communication design.'
+                },
+                {
+                  text: 'Blog Platform',
+                  prompt: 'Design an elegant blogging platform with article cards, categories, search, author profiles, and comment sections. Reading-focused, typography-driven layout.'
+                },
+                {
+                  text: 'CRM Dashboard',
+                  prompt: 'Build a comprehensive CRM with customer management, sales pipeline, analytics, and communication tracking. Business-focused, data-rich interface.'
+                },
+                {
+                  text: 'Photo Gallery',
+                  prompt: 'Create a stunning photo gallery with grid/masonry layouts, lightbox viewing, albums, and filtering options. Visual-first, elegant design.'
+                },
+                {
+                  text: 'Event Platform',
+                  prompt: 'Design an event management platform with event listings, RSVP features, ticketing, and calendar integration. Engaging, community-focused layout.'
+                },
+                {
+                  text: 'Learning Portal',
+                  prompt: 'Build an educational platform with course catalog, video lessons, progress tracking, and quizzes. Clean, learning-optimized interface.'
+                }
+              ].map((example) => (
+                <button
+                  key={example.text}
+                  onClick={() => setPrompt(example.prompt)}
+                  disabled={isCreatingProject}
+                  className="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-500 bg-transparent border border-black/10 dark:border-white/10 rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-black/20 dark:hover:border-white/20 hover:text-gray-700 dark:hover:text-gray-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                >
+                  {example.text}
+                </button>
+              ))}
+              </div>
             </div>
           </div>
         </div>

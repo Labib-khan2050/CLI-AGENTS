@@ -814,9 +814,9 @@ export default function ChatLog({ projectId, onSessionStatusChange, onProjectSta
                   exit={{ opacity: 0, y: -10 }}
                 >
                 {message.role === 'user' ? (
-                  // User message - boxed on the right
+                  // User message - boxed on the right with neon glow
                   <div className="flex justify-end">
-                    <div className="max-w-[80%] bg-gray-100 dark:bg-gray-800 rounded-lg px-4 py-3">
+                    <div className="max-w-[80%] bg-gray-100 dark:bg-gray-800 rounded-lg px-4 py-3 shadow-[0_0_15px_rgba(59,130,246,0.3)] dark:shadow-[0_0_20px_rgba(59,130,246,0.4)]">
                       <div className="text-sm text-gray-900 dark:text-white break-words">
                         {(() => {
                           const cleanedMessage = cleanUserMessage(message.content);
@@ -925,14 +925,14 @@ export default function ChatLog({ projectId, onSessionStatusChange, onProjectSta
                     </div>
                   </div>
                 ) : (
-                  // Agent message - full width, no box
+                  // Agent message - full width with subtle neon glow
                   <div className="w-full">
                     {isToolUsageMessage(message.content, message.metadata_json) ? (
                       // Tool usage - clean display with expand functionality
                       <ToolMessage content={message.content} metadata={message.metadata_json} />
                     ) : (
-                      // Regular agent message - plain text
-                      <div className="text-sm text-gray-900 dark:text-white leading-relaxed">
+                      // Regular agent message with cyan glow
+                      <div className="text-sm text-gray-900 dark:text-white leading-relaxed shadow-[0_0_12px_rgba(34,211,238,0.25)] dark:shadow-[0_0_18px_rgba(34,211,238,0.3)] rounded-lg p-3 bg-gray-50/50 dark:bg-gray-900/50">
                         {renderContentWithThinking(shortenPath(message.content))}
                       </div>
                     )}
@@ -955,7 +955,7 @@ export default function ChatLog({ projectId, onSessionStatusChange, onProjectSta
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
               >
-                <div className="text-sm text-gray-900 dark:text-white leading-relaxed">
+                <div className="text-sm text-gray-900 dark:text-white leading-relaxed shadow-[0_0_10px_rgba(168,85,247,0.2)] dark:shadow-[0_0_15px_rgba(168,85,247,0.25)] rounded-lg p-3 bg-gray-50/50 dark:bg-gray-900/50">
                   {renderLogEntry(log)}
                 </div>
               </motion.div>

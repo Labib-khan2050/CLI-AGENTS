@@ -12,7 +12,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8080';
 interface GlobalSettingsProps {
   isOpen: boolean;
   onClose: () => void;
-  initialTab?: 'general' | 'ai-agents' | 'services' | 'about';
+  initialTab?: 'ai-agents' | 'services';
 }
 
 interface CLIOption {
@@ -34,7 +34,7 @@ const CLI_OPTIONS: CLIOption[] = [
     name: 'Claude Code',
     icon: '',
     description: 'Anthropic Claude with advanced reasoning',
-    color: 'from-orange-500 to-red-600',
+    color: 'from-black to-gray-800',
     brandColor: '#DE7356',
     downloadUrl: 'https://docs.anthropic.com/en/docs/claude-code/overview',
     installCommand: 'npm install -g @anthropic-ai/claude-code',
@@ -124,9 +124,9 @@ interface ServiceToken {
   last_used?: string;
 }
 
-export default function GlobalSettings({ isOpen, onClose, initialTab = 'general' }: GlobalSettingsProps) {
+export default function GlobalSettings({ isOpen, onClose, initialTab = 'ai-agents' }: GlobalSettingsProps) {
   const { theme, toggle: toggleTheme } = useTheme();
-  const [activeTab, setActiveTab] = useState<'general' | 'ai-agents' | 'services' | 'about'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'ai-agents' | 'services'>(initialTab);
   const [serviceModalOpen, setServiceModalOpen] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState<'github' | 'supabase' | 'vercel' | null>(null);
   const [tokens, setTokens] = useState<{ [key: string]: ServiceToken | null }>({
@@ -363,8 +363,8 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                   <FaCog size={20} />
                 </span>
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Global Settings</h2>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Configure your Claudable preferences</p>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Environment</h2>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Configure your preferences</p>
                 </div>
               </div>
               <button
@@ -382,10 +382,8 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
           <div className="border-b border-gray-200 dark:border-gray-700">
             <nav className="flex px-5">
               {[
-                { id: 'general' as const, label: 'General' },
                 { id: 'ai-agents' as const, label: 'AI Agents' },
-                { id: 'services' as const, label: 'Services' },
-                { id: 'about' as const, label: 'About' }
+                { id: 'services' as const, label: 'Services' }
               ].map(tab => (
                 <button
                   key={tab.id}
@@ -404,71 +402,6 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
 
           {/* Tab Content */}
           <div className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
-            {activeTab === 'general' && (
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Appearance</h3>
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-700">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">Dark Mode</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Toggle between light and dark theme</p>
-                    </div>
-                    <button
-                      onClick={toggleTheme}
-                      className="relative inline-flex h-7 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-600 transition-colors focus:outline-none"
-                      role="switch"
-                      aria-checked={theme === 'dark'}
-                    >
-                      <span className="sr-only">Toggle theme</span>
-                      <span
-                        className={`${
-                          theme === 'dark' ? 'translate-x-8' : 'translate-x-1'
-                        } inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition-transform flex items-center justify-center`}
-                      >
-                        {theme === 'dark' ? (
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#6366f1"/>
-                          </svg>
-                        ) : (
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="5" fill="#fbbf24"/>
-                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round"/>
-                          </svg>
-                        )}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Preferences</h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-700">
-                      <div>
-                        <p className="font-medium text-gray-900 dark:text-white">Auto-save projects</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Automatically save changes to projects</p>
-                      </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" className="sr-only peer" defaultChecked />
-                        <div className="w-11 h-6 bg-white dark:bg-gray-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#DE7356]"></div>
-                      </label>
-                    </div>
-                    
-                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-700">
-                      <div>
-                        <p className="font-medium text-gray-900 dark:text-white">Show file extensions</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Display file extensions in code explorer</p>
-                      </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" className="sr-only peer" defaultChecked />
-                        <div className="w-11 h-6 bg-white dark:bg-gray-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#DE7356]"></div>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
             {activeTab === 'ai-agents' && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
@@ -690,72 +623,6 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'about' && (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-4 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#DE7356]/20 to-[#DE7356]/5 blur-xl rounded-2xl" />
-                    <img 
-                      src="/Claudable_Icon.png" 
-                      alt="Claudable Icon" 
-                      className="relative z-10 w-full h-full object-contain rounded-2xl shadow-lg"
-                    />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Claudable</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2 font-medium">Version 1.0.0</p>
-                </div>
-                
-                <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
-                  <div className="text-center">
-                    <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
-                      Claudable is an AI-powered development platform that integrates with GitHub, Supabase, and Vercel 
-                      to streamline your web development workflow.
-                    </p>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="p-3 rounded-xl border border-gray-200/50 dark:border-white/5 bg-transparent">
-                      <div className="flex items-center justify-center mb-2">
-                        <svg className="w-5 h-5 text-[#DE7356]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                      </div>
-                      <p className="text-xs font-medium text-gray-700 dark:text-white/80">Fast Deploy</p>
-                    </div>
-                    <div className="p-3 rounded-xl border border-gray-200/50 dark:border-white/5 bg-transparent">
-                      <div className="flex items-center justify-center mb-2">
-                        <svg className="w-5 h-5 text-[#DE7356]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
-                      </div>
-                      <p className="text-xs font-medium text-gray-700 dark:text-white/80">AI Powered</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <div className="flex justify-center gap-6">
-                    <a 
-                      href="https://github.com/opactorai/Claudable" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-[#DE7356] hover:text-[#c95940] transition-colors"
-                    >
-                      GitHub
-                    </a>
-                    <a 
-                      href="https://discord.gg/NJNbafHNQC" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-[#DE7356] hover:text-[#c95940] transition-colors"
-                    >
-                      Discord
-                    </a>
                   </div>
                 </div>
               </div>

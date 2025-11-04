@@ -8,8 +8,8 @@ import { Metadata } from 'next'
 import { AuthReceiver } from '@/lib/auth-receiver-wrapper'
 
 export const metadata: Metadata = {
-  title: 'Claudable',
-  description: 'Claudable Application',
+  title: 'Coding Agents',
+  description: 'Coding Agents - AI-Powered Development Platform',
   icons: {
     icon: '/Claudable_Icon.png',
   },
@@ -18,6 +18,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
       <body className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200">
         <AuthReceiver />
         <ThemeProvider>

@@ -48,7 +48,7 @@ interface ChatInputProps {
 export default function ChatInput({ 
   onSendMessage, 
   disabled = false, 
-  placeholder = "Ask Claudable...",
+  placeholder = "Ask Coding Agents...",
   mode = 'act',
   onModeChange,
   projectId,
@@ -368,7 +368,7 @@ export default function ChatInput({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full ring-offset-background placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 resize-none text-[16px] leading-snug md:text-base bg-transparent focus:bg-transparent rounded-md p-2 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700"
+            className="w-full ring-offset-background placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 resize-none text-[16px] leading-snug md:text-base bg-transparent focus:bg-transparent rounded-md p-2 text-blue-700 dark:text-gray-100 border border-gray-200 dark:border-gray-700"
             id="chatinput"
             placeholder={placeholder}
             disabled={false}

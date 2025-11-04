@@ -9,16 +9,29 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Dark neon theme
         brand: {
-          50: '#f2f7ff', 100: '#e6efff', 200: '#cce0ff', 300: '#99c2ff', 400: '#66a3ff', 500: '#3385ff', 600: '#1a73e8', 700: '#1557b0', 800: '#0f3b78', 900: '#0a2550',
+          50: '#e0f0ff', 
+          100: '#b3d9ff', 
+          200: '#80c2ff', 
+          300: '#4da6ff', 
+          400: '#2693ff', 
+          500: '#0080ff', // Rich neon blue primary
+          600: '#0066cc', 
+          700: '#004d99', 
+          800: '#003366', 
+          900: '#001a33',
         },
-        'bolt-bg-primary': '#0c0a14',
-        'bolt-bg-secondary': '#15111e',
-        'bolt-bg-tertiary': '#1e1a2a',
-        'bolt-border-color': 'rgba(139, 92, 246, 0.2)',
-        'bolt-text-primary': '#e5e2ff',
-        'bolt-text-secondary': '#a8a4ce',
-        'bolt-text-tertiary': '#6b6685',
+        // CLI Studio dark theme
+        'cli-bg-primary': '#0a0a0f', // Almost black
+        'cli-bg-secondary': '#12121a', // Dark grey
+        'cli-bg-tertiary': '#1a1a24', // Lighter dark grey
+        'cli-border-color': 'rgba(0, 128, 255, 0.3)', // Neon blue border
+        'cli-text-primary': '#e0e0ff', // Light text
+        'cli-text-secondary': '#9090c0', // Secondary text
+        'cli-text-tertiary': '#6060a0', // Tertiary text
+        'cli-accent': '#0080ff', // Rich neon blue accent
+        'cli-glow': 'rgba(0, 128, 255, 0.5)', // Neon glow effect
       },
     },
   },

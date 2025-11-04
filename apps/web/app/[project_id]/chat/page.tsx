@@ -12,6 +12,7 @@ import { ProjectSettings } from '../../../components/settings/ProjectSettings';
 import ChatInput from '../../../components/chat/ChatInput';
 import { useUserRequests } from '../../../hooks/useUserRequests';
 import { useGlobalSettings } from '@/contexts/GlobalSettingsContext';
+import DotLoaderDemo from '../../../components/ui/DotLoaderDemo';
 
 // 더 이상 ProjectSettings을 로드하지 않음 (메인 페이지에서 글로벌 설정으로 관리)
 
@@ -1047,7 +1048,7 @@ export default function ChatPage({ params }: Params) {
         return <span className="text-pink-500"><FaCss3Alt size={16} /></span>;
       case 'html':
       case 'htm':
-        return <span className="text-orange-500"><FaHtml5 size={16} /></span>;
+        return <span className="text-black dark:text-white"><FaHtml5 size={16} /></span>;
       case 'json':
         return <span className="text-yellow-600"><VscJson size={16} /></span>;
       case 'md':
@@ -1062,7 +1063,7 @@ export default function ChatPage({ params }: Params) {
       case 'yml':
         return <span className="text-red-500"><SiYaml size={16} /></span>;
       case 'xml':
-        return <span className="text-orange-600"><FaFileCode size={16} /></span>;
+        return <span className="text-black dark:text-white"><FaFileCode size={16} /></span>;
       case 'sql':
         return <span className="text-blue-600"><FaDatabase size={16} /></span>;
       case 'php':
@@ -1076,7 +1077,7 @@ export default function ChatPage({ params }: Params) {
       case 'cxx':
         return <span className="text-blue-600"><SiCplusplus size={16} /></span>;
       case 'rs':
-        return <span className="text-orange-700"><FaRust size={16} /></span>;
+        return <span className="text-black dark:text-white"><FaRust size={16} /></span>;
       case 'go':
         return <span className="text-cyan-500"><SiGo size={16} /></span>;
       case 'rb':
@@ -1084,7 +1085,7 @@ export default function ChatPage({ params }: Params) {
       case 'vue':
         return <span className="text-green-500"><FaVuejs size={16} /></span>;
       case 'svelte':
-        return <span className="text-orange-600"><SiSvelte size={16} /></span>;
+        return <span className="text-black dark:text-white"><SiSvelte size={16} /></span>;
       case 'dockerfile':
         return <span className="text-blue-400"><FaDocker size={16} /></span>;
       case 'toml':
@@ -1811,7 +1812,7 @@ export default function ChatPage({ params }: Params) {
                   runAct(message, images);
                 }}
                 disabled={isRunning}
-                placeholder={mode === 'act' ? "Ask Claudable..." : "Chat with Claudable..."}
+                placeholder={mode === 'act' ? "Ask Coding Agents..." : "Chat with Coding Agents..."}
                 mode={mode}
                 onModeChange={setMode}
                 projectId={projectId}
@@ -2214,26 +2215,6 @@ export default function ChatPage({ params }: Params) {
                     {/* Gradient background similar to main page */}
                     <div className="absolute inset-0">
                       <div className="absolute inset-0 bg-white dark:bg-black" />
-                      <div 
-                        className="absolute inset-0 dark:block hidden transition-all duration-1000 ease-in-out"
-                        style={{
-                          background: `radial-gradient(circle at 50% 100%, 
-                            ${assistantBrandColors[preferredCli] || assistantBrandColors.claude}66 0%, 
-                            ${assistantBrandColors[preferredCli] || assistantBrandColors.claude}4D 25%, 
-                            ${assistantBrandColors[preferredCli] || assistantBrandColors.claude}33 50%, 
-                            transparent 70%)`
-                        }}
-                      />
-                      {/* Light mode gradient - subtle */}
-                      <div 
-                        className="absolute inset-0 block dark:hidden transition-all duration-1000 ease-in-out"
-                        style={{
-                          background: `radial-gradient(circle at 50% 100%, 
-                            ${assistantBrandColors[preferredCli] || assistantBrandColors.claude}40 0%, 
-                            ${assistantBrandColors[preferredCli] || assistantBrandColors.claude}26 25%, 
-                            transparent 50%)`
-                        }}
-                      />
                     </div>
                     
                     {/* Content with z-index to be above gradient */}
@@ -2244,28 +2225,9 @@ export default function ChatPage({ params }: Params) {
                         animate={{ opacity: 1, scale: 1 }}
                         className="text-center"
                       >
-                        {/* Claudable Symbol with loading spinner */}
-                        <div className="w-40 h-40 mx-auto mb-6 relative">
-                          <div 
-                            className="w-full h-full"
-                            style={{
-                              backgroundColor: assistantBrandColors[preferredCli] || assistantBrandColors.claude,
-                              mask: 'url(/Symbol_white.png) no-repeat center/contain',
-                              WebkitMask: 'url(/Symbol_white.png) no-repeat center/contain',
-                              opacity: 0.9
-                            }}
-                          />
-                          
-                          {/* Loading spinner in center */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div 
-                              className="w-14 h-14 border-4 border-t-transparent rounded-full animate-spin"
-                              style={{
-                                borderColor: assistantBrandColors[preferredCli] || assistantBrandColors.claude,
-                                borderTopColor: 'transparent'
-                              }}
-                            />
-                          </div>
+                        {/* Dot Loader Animation */}
+                        <div className="mb-6 flex justify-center">
+                          <DotLoaderDemo showText={false} />
                         </div>
                         
                         {/* Content */}
@@ -2273,29 +2235,8 @@ export default function ChatPage({ params }: Params) {
                           Starting Preview Server
                         </h3>
                         
-                        <div className="flex items-center justify-center gap-1 text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center justify-center text-gray-600 dark:text-gray-400">
                           <span>{previewInitializationMessage}</span>
-                          <MotionDiv
-                            className="flex gap-1 ml-2"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                          >
-                            <MotionDiv
-                              animate={{ opacity: [0, 1, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
-                              className="w-1 h-1 bg-gray-600 dark:bg-gray-400 rounded-full"
-                            />
-                            <MotionDiv
-                              animate={{ opacity: [0, 1, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
-                              className="w-1 h-1 bg-gray-600 dark:bg-gray-400 rounded-full"
-                            />
-                            <MotionDiv
-                              animate={{ opacity: [0, 1, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity, delay: 0.6 }}
-                              className="w-1 h-1 bg-gray-600 dark:bg-gray-400 rounded-full"
-                            />
-                          </MotionDiv>
                         </div>
                       </MotionDiv>
                     ) : (
@@ -2305,7 +2246,7 @@ export default function ChatPage({ params }: Params) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
                       >
-                        {/* Claudable Symbol */}
+                        {/* Coding Agents Symbol */}
                         {hasActiveRequests ? (
                           <>
                             <div className="w-40 h-40 mx-auto mb-6 relative">
@@ -2364,7 +2305,7 @@ export default function ChatPage({ params }: Params) {
                               onClick={!isRunning && !isStartingPreview ? start : undefined}
                               className={`w-40 h-40 mx-auto mb-6 relative ${!isRunning && !isStartingPreview ? 'cursor-pointer group' : ''}`}
                             >
-                              {/* Claudable Symbol with rotating animation when starting */}
+                              {/* Coding Agents Symbol with rotating animation when starting */}
                               <MotionDiv
                                 className="w-full h-full"
                                 animate={isStartingPreview ? { rotate: 360 } : {}}

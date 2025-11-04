@@ -26,7 +26,7 @@ const CLI_OPTIONS: CLIOption[] = [
     name: 'Claude Code',
     icon: '🤖',
     description: 'Anthropic Claude with advanced reasoning',
-    color: 'from-orange-500 to-red-600',
+    color: 'from-black to-gray-800',
     downloadUrl: 'https://github.com/anthropics/claude-code',
     installCommand: 'npm install -g @anthropic-ai/claude-code',
     models: [

@@ -1,7 +1,7 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark';
 
 type ThemeCtx = { theme: Theme; toggle: () => void; setTheme: (t: Theme) => void };
 
@@ -14,40 +14,25 @@ export function useTheme() {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize theme from localStorage or default to 'light'
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('theme') as Theme | null;
-      return stored || 'light';
-    }
-    return 'light';
-  });
+  // Force dark mode always
+  const theme: Theme = 'dark';
 
   useEffect(() => {
-    // Apply theme class on mount
+    // Force dark mode on mount and always
     if (typeof document !== 'undefined') {
       const root = document.documentElement;
-      if (theme === 'dark') {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
+      root.classList.add('dark');
+      // Prevent light mode
+      root.style.colorScheme = 'dark';
     }
   }, []);
 
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const root = document.documentElement;
-      if (theme === 'dark') {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
-      localStorage.setItem('theme', theme);
-    }
-  }, [theme]);
-
-  const value = useMemo(() => ({ theme, setTheme, toggle: () => setTheme(theme === 'dark' ? 'light' : 'dark') }), [theme]);
+  // No-op toggle since we only have dark mode
+  const value = useMemo(() => ({ 
+    theme, 
+    setTheme: () => {}, // No-op
+    toggle: () => {} // No-op
+  }), []);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
