@@ -1,6 +1,6 @@
 /**
  * Auth Receiver for Claudable
- * Receives authentication from Neuron AI parent window
+ * Receives authentication from Coretex parent window
  */
 
 export interface AuthBridgeMessage {
@@ -12,12 +12,12 @@ export interface AuthBridgeMessage {
 }
 
 /**
- * Initialize auth receiver to listen for Neuron AI auth messages
+ * Initialize auth receiver to listen for Coretex auth messages
  */
 export function initAuthReceiver() {
   if (typeof window === 'undefined') return;
 
-  console.log('[AuthReceiver] Claudable listening for auth messages from Neuron AI');
+  console.log('[AuthReceiver] Claudable listening for auth messages from Coretex');
 
   window.addEventListener('message', (event) => {
     // In production, verify origin:
@@ -53,10 +53,10 @@ export function initAuthReceiver() {
 }
 
 /**
- * Handle token received from Neuron AI
+ * Handle token received from Coretex
  */
 function handleTokenReceived(token: string) {
-  console.log('[AuthReceiver] Storing Neuron AI token in Claudable');
+  console.log('[AuthReceiver] Storing Coretex token in Claudable');
   
   // Store token
   localStorage.setItem('neuron-ai-token', token);
@@ -68,22 +68,22 @@ function handleTokenReceived(token: string) {
   // Set authenticated flag
   localStorage.setItem('neuron-authenticated', 'true');
   
-  console.log('[AuthReceiver] Claudable authenticated via Neuron AI');
+  console.log('[AuthReceiver] Claudable authenticated via Coretex');
 }
 
 /**
- * Handle user data received from Neuron AI
+ * Handle user data received from Coretex
  */
 function handleUserReceived(user: any) {
-  console.log('[AuthReceiver] Storing Neuron AI user data in Claudable:', user);
+  console.log('[AuthReceiver] Storing Coretex user data in Claudable:', user);
   localStorage.setItem('neuron-ai-user', JSON.stringify(user));
 }
 
 /**
- * Handle logout signal from Neuron AI
+ * Handle logout signal from Coretex
  */
 function handleLogout() {
-  console.log('[AuthReceiver] Claudable logging out (signal from Neuron AI)');
+  console.log('[AuthReceiver] Claudable logging out (signal from Coretex)');
   localStorage.removeItem('neuron-ai-token');
   localStorage.removeItem('neuron-ai-user');
   localStorage.removeItem('token');
@@ -94,14 +94,14 @@ function handleLogout() {
 }
 
 /**
- * Get stored Neuron AI token
+ * Get stored Coretex token
  */
 export function getNeuronToken(): string | null {
   return localStorage.getItem('neuron-ai-token');
 }
 
 /**
- * Get stored Neuron AI user
+ * Get stored Coretex user
  */
 export function getNeuronUser(): any | null {
   const user = localStorage.getItem('neuron-ai-user');
@@ -109,7 +109,7 @@ export function getNeuronUser(): any | null {
 }
 
 /**
- * Check if authenticated via Neuron AI
+ * Check if authenticated via Coretex
  */
 export function isNeuronAuthenticated(): boolean {
   return localStorage.getItem('neuron-authenticated') === 'true';
