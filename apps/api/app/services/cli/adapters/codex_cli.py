@@ -256,16 +256,24 @@ class CodexCLI(BaseCLI):
             session_ready = False
             timeout_count = 0
             max_timeout = 100  # Max lines to read for session init
+            stderr_lines = []
 
             while not session_ready and timeout_count < max_timeout:
                 line = await process.stdout.readline()
                 if not line:
+                    # Check stderr for errors
+                    if process.stderr:
+                        stderr_data = await process.stderr.read()
+                        if stderr_data:
+                            stderr_lines.append(stderr_data.decode())
                     break
 
                 line_str = line.decode().strip()
                 if not line_str:
                     timeout_count += 1
                     continue
+
+                ui.debug(f"Codex output: {line_str[:100]}...", "Codex")
 
                 try:
                     event = json.loads(line_str)
@@ -306,7 +314,22 @@ class CodexCLI(BaseCLI):
                     continue
 
             if not session_ready:
-                ui.error("Failed to initialize Codex session", "Codex")
+                error_msg = "Failed to initialize Codex session"
+                if stderr_lines:
+                    error_msg += f"\nStderr: {' '.join(stderr_lines)}"
+                ui.error(error_msg, "Codex")
+                
+                # Yield error message to UI
+                yield Message(
+                    id=str(uuid.uuid4()),
+                    project_id=project_path,
+                    role="assistant",
+                    message_type="error",
+                    content=f"❌ Codex failed to start.\n\n{error_msg}\n\nTry: Check OpenAI API key, or run `codex --version` manually",
+                    metadata_json={"cli_type": self.cli_type.value, "error": True},
+                    session_id=session_id,
+                    created_at=datetime.utcnow(),
+                )
                 return
 
             # Send user input
